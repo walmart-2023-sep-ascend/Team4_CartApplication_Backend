@@ -16,22 +16,13 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
-
+/**
+ * 
+ */
 @Configuration
 @EnableMongoRepositories(basePackages = "org.spring.mongo.demo")
 public class MongoConfig extends AbstractMongoClientConfiguration{
 
-	/*
-	 * private static final String MONGO_DB_URL =
-	 * "mongodb+srv://admin:admin@shoppingcart.rvqwo2v.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
-	 * private static final String MONGO_DB_NAME = "shoppingcart";
-	 * 
-	 * @Bean public MongoTemplate mongoTemplate() throws IOException {
-	 * EmbeddedMongoFactoryBean mongo = new EmbeddedMongoFactoryBean();
-	 * mongo.setBindIp(MONGO_DB_URL); MongoClient mongoClient = (MongoClient)
-	 * mongo.getObject(); MongoTemplate mongoTemplate = new
-	 * MongoTemplate(mongoClient, MONGO_DB_NAME); return mongoTemplate; }
-	 */
 
 	@Override
 	protected String getDatabaseName() {
