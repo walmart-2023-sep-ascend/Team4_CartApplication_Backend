@@ -9,37 +9,52 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductRequest extends BaseRequest {
 
-    private static final long serialVersionUID = 1L;
-	
-    private Integer id;
-   
+
+	private Integer id;
+
 	/*
 	 * private String title; private String purchasable;
 	 */
-    private Integer quantity;
-	
-    
-    
-    public Integer getId() {
+	private Integer quantity;
+	private Integer orderLimit;
+	private String inventoryStatus;
+	private Integer availableQty;
+
+
+	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-    
-	/*
-	 * public String getTitle() { return title; } public void setTitle(String title)
-	 * { this.title = title; } public String getPurchasable() { return purchasable;
-	 * } public void setPurchasable(String purchasable) { this.purchasable =
-	 * purchasable; }
-	 */
+
 	public Integer getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-    
-    
-    
+
+	public Integer getOrderLimit() 
+	{ return orderLimit; }
+
+	public void setOrderLimit(Integer orderLimit)
+	{ this.orderLimit = orderLimit; } 
+	
+	public String getInventoryStatus()
+	{ return inventoryStatus; } 
+	
+	public void setInventoryStatus(String inventoryStatus)
+	{ this.inventoryStatus =inventoryStatus; } 
+	
+	public Integer getAvailableQty() 
+	{ 
+		return availableQty; }
+	
+	
+	public void setAvailableQty(Integer availableQty) { this.availableQty =
+			availableQty; }
+
+
+
 }

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartRequest extends BaseRequest {
 
+	
     private Integer userId;
     private List<Products> products;
    
@@ -24,7 +25,6 @@ public class CartRequest extends BaseRequest {
     
 	
 	public Integer getUserId() {
-		System.out.println("inside cartRequest -userId : "+userId);
 		return this.userId;
 	}
 	public List<Products> getProducts() {
@@ -37,14 +37,12 @@ public class CartRequest extends BaseRequest {
 		this.userId = userId;
 	}
 	public Date getDate() {
-		System.out.println("inside cart Request -- date "+ date);
 		return date;
 	}
 	public void setDate(Date date) {
 		this.date = date;
 	}
 	public String getPromoCode() {
-		System.out.println("inside cart Request -- promoCode "+ promoCode);
 		return promoCode;
 	}
 	public void setPromoCode(String promoCode) {

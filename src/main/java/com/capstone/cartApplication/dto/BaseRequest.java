@@ -2,9 +2,18 @@ package com.capstone.cartApplication.dto;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseRequest implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	
+	
+	
 	private Integer _id;
 
 	public Integer getId() {

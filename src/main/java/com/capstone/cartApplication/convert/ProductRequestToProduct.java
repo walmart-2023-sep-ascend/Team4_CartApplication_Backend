@@ -6,22 +6,25 @@ import org.springframework.util.StringUtils;
 
 import com.capstone.cartApplication.dto.ProductRequest;
 import com.capstone.cartApplication.model.Products;
+
 @Component
 public class ProductRequestToProduct implements Converter<ProductRequest, Products> {
 
+	
+	
     @Override
     public Products convert(ProductRequest productRequest) {
-        Products prodcuts = new Products();
+        Products products = new Products();
         
         if (!StringUtils.isEmpty(productRequest.getId())) {
-        	System.out.println("productRequest-> Id :"+productRequest.getId());
-        	prodcuts.setId(productRequest.getId());
+        	products.setId(productRequest.getId());
         }
-		/*
-		 * prodcuts.setTitle(productRequest.getTitle());
-		 * prodcuts.setPurchasable(productRequest.getPurchasable());
-		 */
-        prodcuts.setQuantity(productRequest.getQuantity());
-        return prodcuts;
+        products.setQuantity(productRequest.getQuantity());
+      //  products.setOrderLimit(productRequest.getOrderLimit());
+       // products.setAvailableQty(productRequest.getAvailableQty());
+       // products.setInventoryStatus(productRequest.getInventoryStatus());
+        
+        return products;
     }
+    
 }

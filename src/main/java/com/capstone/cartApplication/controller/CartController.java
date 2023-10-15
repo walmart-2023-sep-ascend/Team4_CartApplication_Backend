@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.cartApplication.dto.CartRequest;
+import com.capstone.cartApplication.dto.ProductRequest;
 import com.capstone.cartApplication.model.Cart;
+import com.capstone.cartApplication.model.Products;
 import com.capstone.cartApplication.service.*;
 
 
@@ -20,28 +22,21 @@ public class CartController {
 
 	@Autowired
 	private CartService cartService;
+	
+	  @Autowired
+	  public CartController(CartService cartService)
+	  { this.cartService=cartService;
+	  
+	  }
+	 
+	
 
-
-
-	@Autowired 
-	public CartController(CartService cartService) { 
-		this.cartService= cartService; 
-		
-	}
-
-
-	@GetMapping(value ="/createTest")
-	private void createTest() {
-		System.out.println("Inside cart create");
-
-	}
 
 	@GetMapping(value = "/fetchCartDetails")
 	private ResponseEntity getCartByCustomerId(@RequestBody CartRequest cartRequest) {
-		System.out.println("Inside fetchCartDetails ");
+		System.out.println(" Step 1: Inside fetchCartDetails ");
 		try {
 			Cart cart = cartService.findCartByUserId(cartRequest);
-			System.out.println("outside "+ cartRequest.getUserId()+cart.getProducts());
 			return new ResponseEntity<>(cart, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println("Find Cart by Customer id method error {}" + e.getMessage());
@@ -54,17 +49,27 @@ public class CartController {
 	    private ResponseEntity addToCart(@RequestBody CartRequest cartRequest) {
 	        try {
 	        	
-	        	System.out.println("Inside addToCart");
-	        	System.out.println("incoming Request ->"+cartRequest.getPromoCode());
+	        	System.out.println(" Inside addToCart");
+	        	System.out.println(" incoming Request for User Id> "+cartRequest.getUserId());
 	        	
 	            Cart cart = cartService.saveOrUpdate(cartRequest);
 	            return new ResponseEntity<>(cart, HttpStatus.CREATED);
 	        } catch (Exception e) {
-	        	System.out.println("Create Cart method error {}"+ e.getMessage());
+	        	System.out.println("Exception :: Create Cart method error {}"+ e.getMessage());
 	            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	        }
 	    }
 
-
+		/*
+		 * @GetMapping(value = "/fetchItem") private ResponseEntity
+		 * getItemById(@RequestBody ProductRequest productRequest) {
+		 * System.out.println("Inside fetchCartDetails "); try { Products product =
+		 * productService.findItemById(productRequest.getId());
+		 * System.out.println("outside "+ productRequest.getId()); return new
+		 * ResponseEntity<>(product, HttpStatus.OK); } catch (Exception e) {
+		 * System.out.println("Find item by item id method error {}" + e.getMessage());
+		 * return new ResponseEntity<>(e.getMessage(),
+		 * HttpStatus.INTERNAL_SERVER_ERROR); } }
+		 */
 
 }

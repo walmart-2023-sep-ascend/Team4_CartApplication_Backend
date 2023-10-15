@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.capstone.cartApplication.model.Products;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,10 +21,12 @@ import lombok.NonNull;
 public class Cart {
 
 
+
+
 	@Id
-	private ObjectId databaseId;
+	private ObjectId _id;
 	private Integer cartId;
-	private Integer userId;
+	private @NonNull Integer userId;
 	private Date date;
 	private String promoCode;
 	private Double amount;
@@ -32,22 +35,18 @@ public class Cart {
 	private @NonNull List<Products> products;
 
 	public Integer getCartId() {
-		System.out.println("-- get cart id-- "+cartId);
 		return cartId;
 	}
 
 	public void setCartId(Integer cartId) {
-		System.out.println("-- set cart id-- "+cartId);
 		this.cartId = cartId;
 	}
 
 	public Integer getUserId() {
-		System.out.println("-- get user id-- "+cartId);
 		return userId;
 	}
 
 	public void setUserId(Integer userId) {
-		System.out.println("-- set user id-- "+cartId);
 		this.userId = userId;
 	}
 
@@ -76,16 +75,26 @@ public class Cart {
 	}
 
 	public List<Products> getProducts() {
-		System.out.println("------ get product ----");
-		System.out.println(" --"+products.get(0).getId());
 		return products;
 	}
 
 	public void setProduct(List<Products> products) {
+		
+		
 		this.products = products;
 	}
 
+	public ObjectId get_id() {
+		return _id;
+	}
 
+	public void set_id(ObjectId _id) {
+		this._id = _id;
+	}
+
+	public void setProducts(List<Products> products) {
+		this.products = products;
+	}
 	
 
 }

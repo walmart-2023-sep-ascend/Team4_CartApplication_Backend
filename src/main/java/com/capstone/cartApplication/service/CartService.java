@@ -7,7 +7,7 @@ import com.capstone.cartApplication.model.Cart;
 
 
 public interface CartService {
-	Cart saveOrUpdate(CartRequest cartRequest);
+	Cart saveOrUpdate(CartRequest cartRequest) throws Exception;
 
     Cart findCartByUserId(CartRequest cartRequest);
 
