@@ -8,6 +8,7 @@ com/capstone/cartApplication/model/Cart.class
 com/capstone/cartApplication/CartApplication.class
 com/capstone/cartApplication/service/UserServiceImpl.class
 com/capstone/cartApplication/model/Products.class
+com/capstone/cartApplication/utility/ProductException.class
 com/capstone/cartApplication/controller/ProductController.class
 com/capstone/cartApplication/service/CartServiceImpl.class
 com/capstone/cartApplication/service/UserService.class

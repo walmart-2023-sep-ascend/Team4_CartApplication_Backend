@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.capstone.cartApplication.model.Products;
 
 @Repository
-public interface ProductRepository extends MongoRepository<Products, Integer> {
+public interface ProductRepository extends MongoRepository<Products, Object> {
    // List<Products> findAll();
     Products findItemById(Integer id);
     
