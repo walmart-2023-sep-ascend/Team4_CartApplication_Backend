@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartRequest extends BaseRequest {
 
-	
     private Integer userId;
     private List<Products> products;
    

@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseRequest implements Serializable {
-
-	
-	
 	
 	private Integer _id;
 

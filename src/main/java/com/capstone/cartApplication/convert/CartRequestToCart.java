@@ -20,11 +20,9 @@ public class CartRequestToCart implements Converter<CartRequest, Cart> {
 	
 	@Override
 	public Cart convert(CartRequest cartRequest) {
-		System.out.println("--Inside cartRequestTocart--");
 		Cart cart = new Cart();
 
 		if (!StringUtils.isEmpty(cartRequest.getUserId())) {
-			System.out.println("--Inside cartRequestTocart-- "+cartRequest.getUserId());
 
 			cart.setCartId(cartRequest.getId());
 			cart.setUserId(cartRequest.getUserId());

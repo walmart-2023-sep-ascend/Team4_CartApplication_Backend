@@ -119,8 +119,6 @@ public class CartServiceImpl extends Exception   implements CartService {
 				productAvaliablity=true;
 			}
 		}
-
-
 		System.out.println("productAvaliablity : "+productAvaliablity);
 
 		return productAvaliablity;

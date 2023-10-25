@@ -34,7 +34,6 @@ public class CartController {
 
 	@GetMapping(value = "/fetchCartDetails")
 	private ResponseEntity getCartByCustomerId(@RequestBody CartRequest cartRequest) {
-		System.out.println(" Step 1: Inside fetchCartDetails ");
 		try {
 			Cart cart = cartService.findCartByUserId(cartRequest);
 			return new ResponseEntity<>(cart, HttpStatus.OK);
