@@ -9,8 +9,6 @@ import com.capstone.cartApplication.model.Products;
 
 @Component
 public class ProductRequestToProduct implements Converter<ProductRequest, Products> {
-
-	
 	
     @Override
     public Products convert(ProductRequest productRequest) {

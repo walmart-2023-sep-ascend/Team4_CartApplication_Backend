@@ -7,12 +7,16 @@ import java.util.Optional;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capstone.cartApplication.controller.CartController;
 import com.capstone.cartApplication.convert.CartRequestToCart;
 import com.capstone.cartApplication.convert.ProductRequestToProduct;
 import com.capstone.cartApplication.dto.CartRequest;
+import com.capstone.cartApplication.dto.CartToWishRequest;
 import com.capstone.cartApplication.model.Cart;
 import com.capstone.cartApplication.model.Products;
 import com.capstone.cartApplication.repository.CartRepository;
@@ -33,6 +37,11 @@ public class CartServiceImpl extends Exception   implements CartService {
 	private CartRepository cartRepository;
 	private CartRequestToCart cartRequestToCart;
 	private ProductRepository productRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+	
+	@Autowired	
+	private MessageService messageService;
 
 	@Autowired
 	public CartServiceImpl(CartRepository cartRepository, CartRequestToCart cartRequestToCart,ProductRepository productRepository) {
@@ -49,11 +58,10 @@ public class CartServiceImpl extends Exception   implements CartService {
 		try {
 			c =cartRepository.findCartByUserId(cartRequest.getUserId());
 		}catch(Exception e) {
-			System.out.println("Exception "+e);
+			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
 		}
 
 		if(c!=null && c.get_id()!=null) { // Update Cart 
-			List<Products> newProductList = new ArrayList<Products>();
 			List<Products> dbProductList = c.getProducts();
 			List<Products> reqProdList = cartRequest.getProducts();
 
@@ -61,20 +69,21 @@ public class CartServiceImpl extends Exception   implements CartService {
 			{
 				for (Products dbProduct : dbProductList)
 				{
+					logger.info("db product "+ dbProduct.getId());
 					boolean  isItemAvailable =isProductAvailable(reqProduct);	
-					System.out.println("Is Product is available "+ isItemAvailable);
+					logger.info("Is Product is available "+ isItemAvailable);
 					if( isItemAvailable) {
 						if (dbProduct.getId().equals(reqProduct.getId()))
 						{
 							dbProduct.setQuantity(reqProduct.getQuantity());
-							newProductList.add(dbProduct);
+							dbProductList.add(dbProduct);
 							break;
 						}else {
-							System.out.println("creating new product  ---->"+dbProduct.getId());
+							//System.out.println("creating new product  ---->"+dbProduct.getId());
 							Products p = new Products();
 							p.setId(reqProduct.getId());
 							p.setQuantity(reqProduct.getQuantity());
-							newProductList.add(p);
+							dbProductList.add(p);
 							break;
 						}
 					}else {
@@ -82,7 +91,7 @@ public class CartServiceImpl extends Exception   implements CartService {
 					}
 				}
 			}
-			c.setProduct(newProductList);
+			c.setProduct(dbProductList);
 
 			return cartRepository.save(c);
 		}else { // Create Cart
@@ -93,9 +102,13 @@ public class CartServiceImpl extends Exception   implements CartService {
 	}
 
 	@Override
-	public Cart findCartByUserId(CartRequest cartRequest) {
-		System.out.println("-- Inside findCartByUserId ---");
-		return cartRepository.findCartByUserId(cartRequest.getUserId());
+	public Cart findCartByUserId(int  userID) throws ProductException {
+		logger.info("Inside findCartByUserId");
+			if(cartRepository.findCartByUserId(userID)==null)
+				throw new ProductException("User Details not available in cart table ");
+			else
+				return cartRepository.findCartByUserId(userID);
+				
 	}
 
 	@Override
@@ -108,24 +121,46 @@ public class CartServiceImpl extends Exception   implements CartService {
 		boolean productAvaliablity = false;
 
 		Products products = productRepository.findItemById(reqProduct.getId());
-		System.out.println("req id : "+reqProduct.getId());
-		System.out.println("req qty ->: "+reqProduct.getQuantity());
-		if(products.getId()!=null) {
+		logger.info("req id : "+reqProduct.getId());
+		logger.info("req qty ->: "+reqProduct.getQuantity());
+		if(products!=null && products.getId()!=null) {
 
-			System.out.println("db qty "+ products.getAvailableQty());
+			logger.info("db qty "+ products.getAvailableQty());
 			if( products.getAvailableQty() >=reqProduct.getQuantity()) 
 			{
 
 				productAvaliablity=true;
 			}
 		}
-		System.out.println("productAvaliablity : "+productAvaliablity);
+		logger.info("productAvaliablity : "+productAvaliablity);
 
 		return productAvaliablity;
 	}
 
+	@Override
+	public Cart removeProductFromCart(Cart cart,Integer prodId) {
+		logger.info("-- Inside removeProductFromCart ---");
+		List<Products> listProduct=cart.getProducts();
+		for(Products p:listProduct) {
+			logger.info("--productId ---"+p.getId());
+			logger.info("--Quantity ---"+p.getQuantity());
+			logger.info("--Before Removing ---"+listProduct);
 
-
+			if(p.getId() == prodId) {
+				logger.info("-- Removing ProductId ---"+p.getId()+"  :  "+prodId);
+				listProduct.remove(p);
+				logger.info("--After Removing ---"+listProduct);
+			}
+			cart.setProduct(listProduct);
+		}
+		return cartRepository.save(cart);
+	}
+	
+	/*
+	 * @Override public Cart findCartByCartId(CartToWishRequest cartToWishRequest) {
+	 * System.out.println("-- Inside findCartByCartId ---"); return
+	 * cartRepository.findById(cartToWishRequest.getCartID()); }
+	 */
 
 
 

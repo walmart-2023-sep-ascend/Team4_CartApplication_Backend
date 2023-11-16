@@ -9,8 +9,6 @@ import com.capstone.cartApplication.model.Cart;
 
 import org.bson.types.ObjectId;
 
-
-
 @Repository
 public interface CartRepository extends  MongoRepository<Cart, ObjectId> {
 	
@@ -21,6 +19,8 @@ public interface CartRepository extends  MongoRepository<Cart, ObjectId> {
 
 	@Aggregation(pipeline = { "{$group: { _id: '', total: {$min: $cartId }}}" })
 	public Integer min();
+
+	//Cart findById(Integer cartID);
 
 	
 	//Cart findTopByCartByCart();

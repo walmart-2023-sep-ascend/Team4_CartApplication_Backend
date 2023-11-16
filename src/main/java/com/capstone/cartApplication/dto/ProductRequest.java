@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductRequest extends BaseRequest {
 
-
 	private Integer id;
 
 	/*

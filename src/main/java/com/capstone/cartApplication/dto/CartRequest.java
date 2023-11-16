@@ -16,8 +16,6 @@ public class CartRequest extends BaseRequest {
 
     private Integer userId;
     private List<Products> products;
-   
-	
 	private Date date;
 	private String promoCode;
 	private Double amount;

@@ -5,6 +5,6 @@ import com.capstone.cartApplication.model.Products;
 
 public interface ProductService {
 
-    Products findItemById(ProductRequest productRequest);
+    Products findItemById(Integer itemId);
 
 }

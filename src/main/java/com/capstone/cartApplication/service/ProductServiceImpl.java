@@ -19,18 +19,15 @@ public class ProductServiceImpl implements ProductService{
 
 	private ProductRepository productRepository;
 
-
-
-
 	@Autowired
 	public ProductServiceImpl(ProductRepository productRepository, ProductRequestToProduct productRequestToProduct) {
 		this.productRepository = productRepository;
 	}    
 
 	@Override
-	public Products findItemById(ProductRequest productRequest) {
-		Products prod = productRepository.findItemById(productRequest.getId());
-		return productRepository.findItemById(productRequest.getId());
+	public Products findItemById(Integer itemId) {
+		//Products prod = productRepository.findItemById(itemId);
+		return productRepository.findItemById(itemId);
 	}
 
 

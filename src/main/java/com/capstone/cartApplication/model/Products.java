@@ -24,9 +24,13 @@ public class Products {
 	private Integer availableQty;
 	private String inventoryStatus;
 	private Integer orderLimit;
-	
+	private boolean isElegibileForPromotion;
+	private float discount;
 
-	
+
+
+
+
 	public ObjectId get_id() {
 		return _id;
 	}
@@ -56,30 +60,48 @@ public class Products {
 		this.quantity = quantity;
 	}
 
-	
-	  public Integer getAvailableQty() { return availableQty; }
-	  
-	  
-	  public void setAvailableQty(Integer availableQty) { this.availableQty =
-	  availableQty; }
-	  
-	  
-	  public Integer getOrderLimit() { return orderLimit; }
-	  
-	  
-	  public void setOrderLimit(Integer orderLimit) { this.orderLimit = orderLimit;
-	  }
-	  
-	  
-	  public String getInventoryStatus() { return inventoryStatus; }
-	  
-	  
-	  public void setInventoryStatus(String inventoryStatus) { this.inventoryStatus
-	  = inventoryStatus; }
-	 
-	
 
-	
+	public Integer getAvailableQty() { return availableQty; }
+
+
+	public void setAvailableQty(Integer availableQty) { this.availableQty =
+			availableQty; }
+
+
+	public Integer getOrderLimit() { return orderLimit; }
+
+
+	public void setOrderLimit(Integer orderLimit) { this.orderLimit = orderLimit;
+	}
+
+
+	public String getInventoryStatus() { return inventoryStatus; }
+
+
+	public void setInventoryStatus(String inventoryStatus) { this.inventoryStatus
+		= inventoryStatus; }
+
+	public boolean isElegibileForPromotion() {
+		return isElegibileForPromotion;
+	}
+
+
+	public void setElegibileForPromotion(boolean isElegibileForPromotion) {
+		this.isElegibileForPromotion = isElegibileForPromotion;
+	}
+
+
+	public float getDiscount() {
+		return discount;
+	}
+
+
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+
+
+
 
 
 }

@@ -20,9 +20,6 @@ import lombok.NonNull;
 @Document("cart")
 public class Cart {
 
-
-
-
 	@Id
 	private ObjectId _id;
 	private Integer cartId;
