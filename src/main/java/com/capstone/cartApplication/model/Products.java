@@ -26,8 +26,8 @@ public class Products {
 	private Integer orderLimit;
 	private boolean isElegibileForPromotion;
 	private float discount;
-
-
+	private String iconUrl;
+	private String title;
 
 
 
@@ -98,6 +98,26 @@ public class Products {
 
 	public void setDiscount(float discount) {
 		this.discount = discount;
+	}
+
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 
