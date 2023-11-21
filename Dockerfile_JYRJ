@@ -1,0 +1,15 @@
+## Following all need to be changed as per our requirement.
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:8-jdk-alpine
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Compile the application
+RUN javac Main.java
+
+# Run the application
+CMD ["java", "Main"]
