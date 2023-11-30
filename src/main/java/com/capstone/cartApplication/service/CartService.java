@@ -12,9 +12,12 @@ public interface CartService {
 	Cart saveOrUpdate(CartRequest cartRequest) throws Exception;
 
     Cart findCartByUserId(int userid) throws ProductException;
+    
+    Cart findCartByCartId(int cartid) throws ProductException;
+    
 
     List<Cart> findAllCarts();
 
-    Cart removeProductFromCart(Cart cart,Integer prodId);
+    Cart removeProductFromCart(Cart cart,Integer prodId) throws ProductException;
     
 }

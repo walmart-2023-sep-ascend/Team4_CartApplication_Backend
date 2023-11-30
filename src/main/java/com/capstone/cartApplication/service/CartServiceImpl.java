@@ -145,15 +145,29 @@ public class CartServiceImpl extends Exception   implements CartService {
 	}
 
 	@Override
-	public Cart removeProductFromCart(Cart cart,Integer prodId) {
-		List<Products> listProduct=cart.getProducts();
-		for(Products p:listProduct) {
-			if(p.getId() == prodId) {
-				listProduct.remove(p);
+	public Cart removeProductFromCart(Cart cart,Integer prodId) throws ProductException {
+		logger.info("-- Inside removeProductFromCart ---");
+		//System.out.println("Inside removeProductFromCart ");
+		List<Products> listProduct=new ArrayList<>(cart.getProducts());
+		boolean isProductinCart=false;
+		//for(Products p:listProduct) { 
+		for (int i = 0; i < listProduct.size(); i++) {
+			
+			//System.out.println("Inside removeProductFromCart before "+(listProduct.get(i)).getId()+" "+(listProduct.get(i)).getQuantity()+" "+listProduct);
+         
+			if((listProduct.get(i)).getId() == prodId) {
+				isProductinCart=true;
+				logger.info("-- Removing ProductId ---"+(listProduct.get(i)).getId()+"  :  "+prodId);
+				listProduct.remove((listProduct.get(i)));
+				logger.info("--After Removing ---"+listProduct);
+			//	System.out.println("Inside removeProductFromCart after "+listProduct);
 			}
 			cart.setProduct(listProduct);
 		}
-		return cartRepository.save(cart);
+		if(!isProductinCart)
+			throw new ProductException("Product is not in Cart and cannot be moved.");
+		else
+			return cartRepository.save(cart);
 	}
 
 	public Date getDate() {
@@ -162,6 +176,14 @@ public class CartServiceImpl extends Exception   implements CartService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy hh:mm:ss");
 		Date date = java.sql.Date.valueOf(currentDate);
 		return date;
+	}
+    @Override
+	 public Cart findCartByCartId(int cartid) throws ProductException{
+		 logger.info("Inside findCartByCartId"); 
+	 	if(cartRepository.findCartByCartId(cartid)==null)
+			throw new ProductException("Cart Details not available in cart table ");
+		else
+			return cartRepository.findCartByCartId(cartid);
 	}
 
 

@@ -20,10 +20,12 @@ import com.capstone.cartApplication.dto.ProductResponse;
 import com.capstone.cartApplication.model.Cart;
 import com.capstone.cartApplication.model.Products;
 import com.capstone.cartApplication.service.*;
+import com.capstone.cartApplication.utility.ProductException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,36 +104,25 @@ public class CartController {
 
 	}
 
-	/*  @PostMapping(value= "/moveFromCartToWish")
+	 @PostMapping(value= "/moveFromCartToWish")
       private ResponseEntity moveFromCartToWish(@RequestBody CartToWishRequest cartToWishRequest) {
-
-                  try {
-                                System.out.println("Inside moveFromCartToWish");
-               System.out.println("incoming Request ->"+cartToWishRequest.getCartID());
-               System.out.println("incoming Request ->"+cartToWishRequest.getProdId());
-
-               Cart cart = cartService.findCartByCartId(cartToWishRequest);
-               //System.out.println("fetching from productservice"+productService.findItemById(cartToWishRequest.getProdId()));
-
-               System.out.println("fetched Cart details : ->"+cart.getCartId());
-               System.out.println("fetched Cart details : ->"+cart.getPromoCode());
-               System.out.println("fetched Cart details : ->"+cart.getAmount());
-               System.out.println("fetched Cart details : ->"+cart.getUserId());
-               System.out.println("fetched Cart details : ->"+cart.getDate());
-
-         //  for(Products p:cart.getProducts()) {
-                                          System.out.println("--productId ---"+p.getId());
-       //                                   System.out.println("--Quantity ---"+p.getQuantity());
-       //                     
-
-          cart=cartService.removeProductFromCart(cart,cartToWishRequest.getProdId());
-               //Cart cart = cartService.saveOrUpdate(cartToWishRequest);
-                                return new ResponseEntity<>(cart, HttpStatus.CREATED);
-                  } catch (Exception e) {
-                                System.out.println("Move From Cart To WishList method error {}"+ e.getMessage());
+                 
+            try {
+               System.out.println("Inside moveFromCartToWish");
+               
+               Cart cart = cartService.findCartByCartId(cartToWishRequest.getCartID()); 
+               cart=cartService.removeProductFromCart(cart,cartToWishRequest.getProdId());
+               return new ResponseEntity<>(cart, HttpStatus.CREATED);
+            }catch (ProductException e) {
+            	return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+             }
+            catch (Exception e) {
+            	String stacktrace = ExceptionUtils.getStackTrace(e);
+            	System.out.println("stacktrace "+ stacktrace);
              return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-                  }
-
-   }*/
+             
+             }
+                 
+	  }
 
 }

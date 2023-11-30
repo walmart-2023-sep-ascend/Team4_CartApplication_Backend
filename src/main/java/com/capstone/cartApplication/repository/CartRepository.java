@@ -21,7 +21,7 @@ public interface CartRepository extends  MongoRepository<Cart, ObjectId> {
 	public Integer min();
 
 	//Cart findById(Integer cartID);
-
+    Cart findCartByCartId(Integer cartID);
 	
 	//Cart findTopByCartByCart();
 
