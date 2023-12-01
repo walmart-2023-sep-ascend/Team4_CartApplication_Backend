@@ -21,6 +21,7 @@ com\capstone\cartApplication\utility\ProductException.class
 com\capstone\cartApplication\repository\PromotionRepository.class
 com\capstone\cartApplication\service\UserServiceImpl.class
 com\capstone\cartApplication\convert\CartRequestToCart.class
+com\capstone\cartApplication\feign\CartInterface.class
 com\capstone\cartApplication\model\Users.class
 com\capstone\cartApplication\controller\CartController.class
 com\capstone\cartApplication\model\Products.class

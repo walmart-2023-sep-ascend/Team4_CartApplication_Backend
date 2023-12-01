@@ -4,6 +4,7 @@ C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\co
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\service\CartService.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\convert\ProductRequestToProduct.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\model\Cart.java
+C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\feign\CartInterface.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\service\MessageService.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\dto\ProductResponse.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\repository\ProductRepository.java

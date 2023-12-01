@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.capstone.cartApplication.controller.CartController;
@@ -20,8 +21,12 @@ import com.capstone.cartApplication.convert.CartRequestToCart;
 import com.capstone.cartApplication.convert.ProductRequestToProduct;
 import com.capstone.cartApplication.dto.CartRequest;
 import com.capstone.cartApplication.dto.CartToWishRequest;
+import com.capstone.cartApplication.feign.CartInterface;
+import com.capstone.cartApplication.feign.CartWishlistInterface;
+import com.capstone.cartApplication.feign.CartInterface;
 import com.capstone.cartApplication.model.Cart;
 import com.capstone.cartApplication.model.Products;
+import com.capstone.cartApplication.model.Wishlist;
 import com.capstone.cartApplication.repository.CartRepository;
 import com.capstone.cartApplication.repository.ProductRepository;
 import com.capstone.cartApplication.utility.ProductException;
@@ -40,6 +45,13 @@ public class CartServiceImpl extends Exception   implements CartService {
 	private CartRepository cartRepository;
 	private CartRequestToCart cartRequestToCart;
 	private ProductRepository productRepository;
+	
+	@Autowired	
+	CartInterface cartInterface;
+	
+	@Autowired	
+	CartWishlistInterface cartWishlistInterface;
+	
 
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
@@ -146,6 +158,7 @@ public class CartServiceImpl extends Exception   implements CartService {
 
 	@Override
 	public Cart removeProductFromCart(Cart cart,Integer prodId) throws ProductException {
+		
 		logger.info("-- Inside removeProductFromCart ---");
 		//System.out.println("Inside removeProductFromCart ");
 		List<Products> listProduct=new ArrayList<>(cart.getProducts());
@@ -157,17 +170,45 @@ public class CartServiceImpl extends Exception   implements CartService {
          
 			if((listProduct.get(i)).getId() == prodId) {
 				isProductinCart=true;
+				
+				//Updating Wishlist Product before removing from cart
+				Wishlist w=new Wishlist();
+				List<Products> wishlistprod =new ArrayList<>();
+				w.setUserId(cart.getUserId());
+				wishlistprod.add(listProduct.get(i));
+				w.setProducts(wishlistprod);
+				
 				logger.info("-- Removing ProductId ---"+(listProduct.get(i)).getId()+"  :  "+prodId);
 				listProduct.remove((listProduct.get(i)));
 				logger.info("--After Removing ---"+listProduct);
-			//	System.out.println("Inside removeProductFromCart after "+listProduct);
+				//System.out.println("Inside removeProductFromCart after "+listProduct);
+				
+				//Calling Wishlist Add method to add the removed product to wishlist
+				//Wishlist addedwishlist=cartWishlistInterface.insert(w);
+				
 			}
 			cart.setProduct(listProduct);
 		}
+		cart=cartRepository.save(cart);
+		
+		/*
+		 * Products product=cartInterface.get(10);
+		 //ResponseEntity product=cartInterface.get(10);
+		System.out.println("Inside feign interface method GET "+product.getTitle());
+		
+		Products producttoAdd=new Products();
+		producttoAdd.setId(20);
+		producttoAdd.setTitle("New Product added from feign");
+		Products addedProduct=cartInterface.insert(producttoAdd);
+		System.out.println("Inside feign interface method ADDEDPRODUCT "+addedProduct.getTitle());
+		*/
+				
 		if(!isProductinCart)
 			throw new ProductException("Product is not in Cart and cannot be moved.");
 		else
-			return cartRepository.save(cart);
+		{
+			return cart;
+		}
 	}
 
 	public Date getDate() {

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfig
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.capstone.cartApplication.repository.CartRepository;
@@ -17,7 +18,8 @@ import jakarta.annotation.Resource;
 
 
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
+@EnableFeignClients
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @EnableMongoRepositories(basePackageClasses = {CartRepository.class,ProductRepository.class})
 public class CartApplication {
