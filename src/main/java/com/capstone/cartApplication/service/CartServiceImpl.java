@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -191,18 +192,7 @@ public class CartServiceImpl extends Exception   implements CartService {
 		}
 		cart=cartRepository.save(cart);
 		
-		/*
-		 * Products product=cartInterface.get(10);
-		 //ResponseEntity product=cartInterface.get(10);
-		System.out.println("Inside feign interface method GET "+product.getTitle());
-		
-		Products producttoAdd=new Products();
-		producttoAdd.setId(20);
-		producttoAdd.setTitle("New Product added from feign");
-		Products addedProduct=cartInterface.insert(producttoAdd);
-		System.out.println("Inside feign interface method ADDEDPRODUCT "+addedProduct.getTitle());
-		*/
-				
+			
 		if(!isProductinCart)
 			throw new ProductException("Product is not in Cart and cannot be moved.");
 		else
@@ -226,6 +216,29 @@ public class CartServiceImpl extends Exception   implements CartService {
 		else
 			return cartRepository.findCartByCartId(cartid);
 	}
-
+    @Override
+   	public Cart removeItemFromCart(int userId, int id) throws ProductException {
+   		logger.error("Inside removeItemFromCart ");
+   		Cart c = null;
+   		boolean isItemPresent =false;
+   		try {
+   			c =cartRepository.findCartByUserId(userId);
+   		}catch(Exception e) {
+   			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
+   		}
+   		
+   		if(c!=null && c.get_id()!=null) { // Update Cart 
+   			List<Products> dbProductList = c.getProducts();
+   			
+   			 List<Products> updatedList = dbProductList.stream()
+   		                .filter(dbProduct -> !dbProduct.getId().equals(id))
+   		                .collect(Collectors.toList());
+   			 c.setProduct(updatedList);
+   		}
+   		
+   		return cartRepository.save(c);
+   	}
+    
+    
 
 }

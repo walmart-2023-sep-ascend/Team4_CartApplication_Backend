@@ -20,4 +20,6 @@ public interface CartService {
 
     Cart removeProductFromCart(Cart cart,Integer prodId) throws ProductException;
     
+    Cart removeItemFromCart(int userId, int prodid) throws ProductException;
+    
 }
