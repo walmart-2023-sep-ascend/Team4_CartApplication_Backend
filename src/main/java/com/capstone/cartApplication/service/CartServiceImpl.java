@@ -64,6 +64,7 @@ public class CartServiceImpl extends Exception   implements CartService {
 		boolean isItemPresent =false;
 		try {
 			c =cartRepository.findCartByUserId(cartRequest.getUserId());
+			c.setAmount(cartRequest.getAmount());
 		}catch(Exception e) {
 			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
 		}
@@ -223,7 +224,9 @@ public class CartServiceImpl extends Exception   implements CartService {
    		                .filter(dbProduct -> !dbProduct.getId().equals(id))
    		                .collect(Collectors.toList());
    			 c.setProduct(updatedList);
+   			logger.error("size of cart "+updatedList.size());
    		}
+   		
    		
    		return cartRepository.save(c);
    	}

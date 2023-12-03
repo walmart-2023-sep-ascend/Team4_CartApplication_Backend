@@ -1,7 +1,5 @@
 package com.capstone.cartApplication.dto;
 
-import org.bson.types.ObjectId;
-
 public class ProductResponse {
 	
 	private Integer id;

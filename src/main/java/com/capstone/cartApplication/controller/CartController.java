@@ -132,7 +132,7 @@ public class CartController {
 	 	@DeleteMapping("/remove")
 	    public ResponseEntity removeItemFromCart(@RequestBody CartItemDelRequest cartRequest) {
 			try {
-				logger.info("---Inside delete");
+				logger.info("---Inside removeItemFromCart"+cartRequest.getUserId()+"cartRequest.getProdId()"+cartRequest.getProdId());
 				Cart cart =cartService.removeItemFromCart(cartRequest.getUserId(), cartRequest.getProdId());
 				CartResponse cartResponse=buildFetchCartResponse(cart);
 				return new ResponseEntity<>(cartResponse, HttpStatus.CREATED);

@@ -2,9 +2,6 @@ package com.capstone.cartApplication.dto;
 
 import java.util.List;
 
-
-import com.capstone.cartApplication.model.Products;
-
 public class CartResponse {
 	
 	private Integer cartId;
