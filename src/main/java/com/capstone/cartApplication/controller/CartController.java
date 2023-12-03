@@ -1,6 +1,12 @@
 package com.capstone.cartApplication.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +23,12 @@ import com.capstone.cartApplication.dto.CartItemDelRequest;
 import com.capstone.cartApplication.dto.CartRequest;
 import com.capstone.cartApplication.dto.CartResponse;
 import com.capstone.cartApplication.dto.CartToWishRequest;
-import com.capstone.cartApplication.dto.ProductRequest;
 import com.capstone.cartApplication.dto.ProductResponse;
 import com.capstone.cartApplication.model.Cart;
 import com.capstone.cartApplication.model.Products;
-import com.capstone.cartApplication.service.*;
+import com.capstone.cartApplication.service.CartService;
+import com.capstone.cartApplication.service.MessageService;
 import com.capstone.cartApplication.utility.ProductException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/cart")
@@ -114,7 +113,9 @@ public class CartController {
                
                Cart cart = cartService.findCartByCartId(cartToWishRequest.getCartID()); 
                cart=cartService.removeProductFromCart(cart,cartToWishRequest.getProdId());
-               return new ResponseEntity<>(cart, HttpStatus.CREATED);
+               
+               CartResponse cartResponse=buildFetchCartResponse(cart);
+               return new ResponseEntity<>(cartResponse, HttpStatus.CREATED);
             }catch (ProductException e) {
             	return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
              }

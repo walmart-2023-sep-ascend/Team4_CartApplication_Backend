@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.capstone.cartApplication.model.Products;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

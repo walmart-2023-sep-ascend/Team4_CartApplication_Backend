@@ -4,36 +4,25 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.capstone.cartApplication.controller.CartController;
 import com.capstone.cartApplication.convert.CartRequestToCart;
-import com.capstone.cartApplication.convert.ProductRequestToProduct;
 import com.capstone.cartApplication.dto.CartRequest;
-import com.capstone.cartApplication.dto.CartToWishRequest;
 import com.capstone.cartApplication.feign.CartInterface;
 import com.capstone.cartApplication.feign.CartWishlistInterface;
-import com.capstone.cartApplication.feign.CartInterface;
 import com.capstone.cartApplication.model.Cart;
 import com.capstone.cartApplication.model.Products;
 import com.capstone.cartApplication.model.Wishlist;
 import com.capstone.cartApplication.repository.CartRepository;
 import com.capstone.cartApplication.repository.ProductRepository;
 import com.capstone.cartApplication.utility.ProductException;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 
 import lombok.RequiredArgsConstructor;
 

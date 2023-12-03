@@ -2,13 +2,13 @@ package com.capstone.cartApplication.dto;
 
 public class CartToWishRequest {
 	
-	private Integer cartID;
+	private Integer cartId;
 	private Integer prodId;
 	public Integer getCartID() {
-		return cartID;
+		return cartId;
 	}
 	public void setCartID(Integer cartID) {
-		this.cartID = cartID;
+		this.cartId = cartID;
 	}
 	public Integer getProdId() {
 		return prodId;
