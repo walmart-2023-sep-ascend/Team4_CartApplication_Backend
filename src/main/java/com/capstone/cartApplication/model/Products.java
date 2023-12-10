@@ -3,7 +3,6 @@ package com.capstone.cartApplication.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators.In;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +27,7 @@ public class Products {
 	private float discount;
 	private String iconUrl;
 	private String title;
+	private Integer retailPrice;
 
 
 
@@ -118,6 +118,16 @@ public class Products {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+
+	public Integer getRetailPrice() {
+		return retailPrice;
+	}
+
+
+	public void setRetailPrice(Integer retailPrice) {
+		this.retailPrice = retailPrice;
 	}
 
 

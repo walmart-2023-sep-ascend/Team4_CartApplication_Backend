@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,13 +36,13 @@ public class CartServiceImpl extends Exception   implements CartService {
 	private CartRepository cartRepository;
 	private CartRequestToCart cartRequestToCart;
 	private ProductRepository productRepository;
-	
+
 	@Autowired	
 	CartInterface cartInterface;
-	
+
 	@Autowired	
 	CartWishlistInterface cartWishlistInterface;
-	
+
 
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
@@ -149,40 +150,37 @@ public class CartServiceImpl extends Exception   implements CartService {
 
 	@Override
 	public Cart removeProductFromCart(Cart cart,Integer prodId) throws ProductException {
-		
+
 		logger.info("-- Inside removeProductFromCart ---");
-		//System.out.println("Inside removeProductFromCart ");
 		List<Products> listProduct=new ArrayList<>(cart.getProducts());
 		boolean isProductinCart=false;
-		//for(Products p:listProduct) { 
 		for (int i = 0; i < listProduct.size(); i++) {
-			
-			//System.out.println("Inside removeProductFromCart before "+(listProduct.get(i)).getId()+" "+(listProduct.get(i)).getQuantity()+" "+listProduct);
-         
+
+
 			if((listProduct.get(i)).getId() == prodId) {
 				isProductinCart=true;
-				
+
 				//Updating Wishlist Product before removing from cart
 				Wishlist w=new Wishlist();
 				List<Products> wishlistprod =new ArrayList<>();
 				w.setUserId(cart.getUserId());
 				wishlistprod.add(listProduct.get(i));
 				w.setProducts(wishlistprod);
-				
+
 				logger.info("-- Removing ProductId ---"+(listProduct.get(i)).getId()+"  :  "+prodId);
 				listProduct.remove((listProduct.get(i)));
 				logger.info("--After Removing ---"+listProduct);
 				//System.out.println("Inside removeProductFromCart after "+listProduct);
-				
+
 				//Calling Wishlist Add method to add the removed product to wishlist
 				//Wishlist addedwishlist=cartWishlistInterface.insert(w);
-				
+
 			}
 			cart.setProduct(listProduct);
 		}
 		cart=cartRepository.save(cart);
-		
-			
+
+
 		if(!isProductinCart)
 			throw new ProductException("Product is not in Cart and cannot be moved.");
 		else
@@ -198,39 +196,66 @@ public class CartServiceImpl extends Exception   implements CartService {
 		Date date = java.sql.Date.valueOf(currentDate);
 		return date;
 	}
-    @Override
-	 public Cart findCartByCartId(int cartid) throws ProductException{
-		 logger.info("Inside findCartByCartId"); 
-	 	if(cartRepository.findCartByCartId(cartid)==null)
+	@Override
+	public Cart findCartByCartId(int cartid) throws ProductException{
+		logger.info("Inside findCartByCartId"); 
+		if(cartRepository.findCartByCartId(cartid)==null)
 			throw new ProductException("Cart Details not available in cart table ");
 		else
 			return cartRepository.findCartByCartId(cartid);
 	}
-    @Override
-   	public Cart removeItemFromCart(int userId, int id) throws ProductException {
-   		logger.error("Inside removeItemFromCart ");
-   		Cart c = null;
-   		boolean isItemPresent =false;
-   		try {
-   			c =cartRepository.findCartByUserId(userId);
-   		}catch(Exception e) {
-   			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
-   		}
-   		
-   		if(c!=null && c.get_id()!=null) { // Update Cart 
-   			List<Products> dbProductList = c.getProducts();
-   			
-   			 List<Products> updatedList = dbProductList.stream()
-   		                .filter(dbProduct -> !dbProduct.getId().equals(id))
-   		                .collect(Collectors.toList());
-   			 c.setProduct(updatedList);
-   			logger.error("size of cart "+updatedList.size());
-   		}
-   		
-   		
-   		return cartRepository.save(c);
-   	}
-    
-    
+	@Override
+	public Cart removeItemFromCart(int userId, int id) throws ProductException {
+		logger.error("Inside removeItemFromCart ");
+		Cart c = null;
+		boolean isItemPresent =false;
+		try {
+			c =cartRepository.findCartByUserId(userId);
+		}catch(Exception e) {
+			logger.error("Exception occered inside  cart saveOrUpdate process "+e);
+		}
+
+		if(c!=null && c.get_id()!=null) { // Update Cart 
+			List<Products> dbProductList = c.getProducts();
+
+
+			Iterator<Products> iterator = dbProductList.iterator();
+			while (iterator.hasNext()) {
+				Products product = iterator.next();
+				if (product.getId() == id) {
+					logger.info("Remvoing product id ->"+id); 
+					iterator.remove();
+					double updatedPrice=updateCartPrice(id,c.getAmount(),product.getQuantity());
+					logger.info("updated cart price  ->"+updatedPrice); 
+					c.setAmount(updatedPrice);
+				}
+
+			}
+			c.setProduct(dbProductList);
+
+			logger.error("size of cart "+dbProductList.size());
+		}
+
+
+		return cartRepository.save(c);
+	}
+
+	public double updateCartPrice(int pId, double totalAmt, int qty) throws ProductException {
+		logger.info("Inside updateCartPrice");
+		logger.info("Product id "+pId+"  cart amt ->"+totalAmt+"  qty->"+qty);
+		double updatedPrice=0;
+		Products products = productRepository.findItemById(pId);
+		int productPrice =products.getRetailPrice();
+
+		updatedPrice=totalAmt -(productPrice*qty);
+		logger.info(" prod priceß  "+productPrice*qty);
+		logger.info(" updateCartPrice  "+updatedPrice);
+		if(updatedPrice>0)
+			return updatedPrice;
+		else
+			throw new ProductException("Update cart value exception"); 
+	}
+
+
 
 }
