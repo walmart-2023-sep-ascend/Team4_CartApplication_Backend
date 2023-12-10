@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.capstone.cartApplication.controller.CartController;
@@ -24,6 +26,12 @@ import com.capstone.cartApplication.model.Wishlist;
 import com.capstone.cartApplication.repository.CartRepository;
 import com.capstone.cartApplication.repository.ProductRepository;
 import com.capstone.cartApplication.utility.ProductException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -149,21 +157,35 @@ public class CartServiceImpl extends Exception   implements CartService {
 	}
 
 	@Override
-	public Cart removeProductFromCart(Cart cart,Integer prodId) throws ProductException {
-
+	public Cart removeProductFromCart(Cart cart,String email,Integer prodId) throws ProductException,IllegalAccessException, JsonMappingException, JsonProcessingException {
+		
 		logger.info("-- Inside removeProductFromCart ---");
+		
 		List<Products> listProduct=new ArrayList<>(cart.getProducts());
 		boolean isProductinCart=false;
+		Double reducedPrice=0.0;
+		Double cartPrice=0.0;
+		cartPrice=cart.getAmount();
+		System.out.println("Inside removeProductFromCart "+cartPrice);
+
 		for (int i = 0; i < listProduct.size(); i++) {
 
 
 			if((listProduct.get(i)).getId() == prodId) {
 				isProductinCart=true;
+				ResponseEntity<Object> respProduct=cartInterface.get(prodId);
+				ObjectMapper objectMapper = new ObjectMapper();
+				Map<String, Object> map = objectMapper.convertValue(respProduct.getBody(), new TypeReference<Map<String, Object>>() {});
+				Object o=map.get("data");
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				Products p = objectMapper.readValue(objectMapper.writeValueAsString(o), Products.class);
+				reducedPrice=cartPrice-p.getRetailPrice();
 
 				//Updating Wishlist Product before removing from cart
 				Wishlist w=new Wishlist();
 				List<Products> wishlistprod =new ArrayList<>();
-				w.setUserId(cart.getUserId());
+				w.setEmail(email);
+				//w.setUserId(cart.getUserId());
 				wishlistprod.add(listProduct.get(i));
 				w.setProducts(wishlistprod);
 
@@ -173,9 +195,11 @@ public class CartServiceImpl extends Exception   implements CartService {
 				//System.out.println("Inside removeProductFromCart after "+listProduct);
 
 				//Calling Wishlist Add method to add the removed product to wishlist
+Wishlist addedwishlist=cartWishlistInterface.insert(w);
 				//Wishlist addedwishlist=cartWishlistInterface.insert(w);
 
 			}
+			cart.setAmount(reducedPrice);
 			cart.setProduct(listProduct);
 		}
 		cart=cartRepository.save(cart);

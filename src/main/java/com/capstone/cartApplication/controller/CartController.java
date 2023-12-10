@@ -111,8 +111,9 @@ public class CartController {
             try {
                System.out.println("Inside moveFromCartToWish");
                
-               Cart cart = cartService.findCartByCartId(cartToWishRequest.getCartID()); 
-               cart=cartService.removeProductFromCart(cart,cartToWishRequest.getProdId());
+               //Cart cart = cartService.findCartByCartId(cartToWishRequest.getCartID()); 
+               Cart cart = cartService.findCartByUserId(cartToWishRequest.getUserId());
+               cart=cartService.removeProductFromCart(cart,cartToWishRequest.getEmail(),cartToWishRequest.getProdId());
                
                CartResponse cartResponse=buildFetchCartResponse(cart);
                return new ResponseEntity<>(cartResponse, HttpStatus.CREATED);

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.capstone.cartApplication.model.Wishlist;
 
-@FeignClient(name="LoginService")
+@FeignClient(name="WhishlistService",url="http://52.142.30.237:9004")
 public interface CartWishlistInterface {
 	
 	@GetMapping(path="/wishlist/fetch/user")

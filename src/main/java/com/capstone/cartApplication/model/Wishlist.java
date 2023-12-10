@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 
 public class Wishlist {
 	
-	private Integer userId;
+	private String email;
 	
 	private List<Products> products;
 
-	public Integer getUserId() {
-		return userId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<Products> getProducts() {
