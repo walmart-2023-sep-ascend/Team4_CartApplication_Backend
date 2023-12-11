@@ -16,6 +16,7 @@ com\capstone\cartApplication\dto\ProductRequest.class
 com\capstone\cartApplication\dto\CartToWishRequest.class
 com\capstone\cartApplication\repository\ProductRepository.class
 com\capstone\cartApplication\repository\CartRepository.class
+com\capstone\cartApplication\feign\CartWishlistInterface.class
 com\capstone\cartApplication\service\UserService.class
 com\capstone\cartApplication\utility\ProductException.class
 com\capstone\cartApplication\repository\PromotionRepository.class
@@ -25,7 +26,10 @@ com\capstone\cartApplication\feign\CartInterface.class
 com\capstone\cartApplication\model\Users.class
 com\capstone\cartApplication\controller\CartController.class
 com\capstone\cartApplication\model\Products.class
+com\capstone\cartApplication\dto\CartItemDelRequest.class
 com\capstone\cartApplication\dto\CartResponse.class
 com\capstone\cartApplication\service\PromotionServiceImpl.class
 com\capstone\cartApplication\controller\ProductController.class
+com\capstone\cartApplication\model\Wishlist.class
 com\capstone\cartApplication\dto\ProductResponse.class
+com\capstone\cartApplication\service\CartServiceImpl$1.class

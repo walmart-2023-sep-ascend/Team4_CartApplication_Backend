@@ -12,8 +12,10 @@ C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\co
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\convert\CartRequestToCart.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\service\UserServiceImpl.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\service\UserService.java
+C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\feign\CartWishlistInterface.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\service\ProductService.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\dto\ProductRequest.java
+C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\model\Wishlist.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\model\Users.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\dto\CartResponse.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\dto\CartToWishRequest.java
@@ -23,6 +25,7 @@ C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\co
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\CartApplication.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\repository\PromotionRepository.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\configuration\MongoConfig.java
+C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\dto\CartItemDelRequest.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\dto\BaseRequest.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\controller\ProductController.java
 C:\Users\i0p013q\Documents\GitHub\Team4_CartApplication_Backend\src\main\java\com\capstone\cartApplication\controller\PromotionController.java
