@@ -12,7 +12,7 @@ import com.capstone.cartApplication.model.Products;
 
 
 
-@FeignClient(name="team3-backend",url="http://localhost:9200")
+@FeignClient(name="team3-backend",url="http://172.203.226.233:9200")
 //@RequestMapping("/api/products")
 //@FeignClient("http://localhost:8081")
 public interface CartInterface {
