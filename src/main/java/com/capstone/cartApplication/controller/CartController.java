@@ -109,8 +109,9 @@ public class CartController {
       private ResponseEntity moveFromCartToWish(@RequestBody CartToWishRequest cartToWishRequest) {
                  
             try {
-               System.out.println("Inside moveFromCartToWish");
-               
+            	logger.info("---Inside moveFromCartToWish"+cartToWishRequest.getUserId()+"cartRequest.getProdId()"
+            +cartToWishRequest.getProdId()+"cartToWishRequest.getEmail "+cartToWishRequest.getEmail()
+            +"cartToWishRequest.getCartID()"+cartToWishRequest.getCartID());
                //Cart cart = cartService.findCartByCartId(cartToWishRequest.getCartID()); 
                Cart cart = cartService.findCartByUserId(cartToWishRequest.getUserId());
                cart=cartService.removeProductFromCart(cart,cartToWishRequest.getEmail(),cartToWishRequest.getProdId());

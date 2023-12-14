@@ -167,6 +167,7 @@ public class CartServiceImpl extends Exception   implements CartService {
 		Double cartPrice=0.0;
 		cartPrice=cart.getAmount();
 		System.out.println("Inside removeProductFromCart "+cartPrice);
+		logger.info("Initial cartPrice during removeProductFromCart "+cartPrice);
 
 		for (int i = 0; i < listProduct.size(); i++) {
 
@@ -179,6 +180,7 @@ public class CartServiceImpl extends Exception   implements CartService {
 				Object o=map.get("data");
 				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				Products p = objectMapper.readValue(objectMapper.writeValueAsString(o), Products.class);
+				logger.info("ProductPrice of the item to be removed during removeProductFromCart "+p.getRetailPrice());
 				reducedPrice=cartPrice-p.getRetailPrice();
 
 				//Updating Wishlist Product before removing from cart
@@ -195,10 +197,13 @@ public class CartServiceImpl extends Exception   implements CartService {
 				//System.out.println("Inside removeProductFromCart after "+listProduct);
 
 				//Calling Wishlist Add method to add the removed product to wishlist
-Wishlist addedwishlist=cartWishlistInterface.insert(w);
+				logger.info("Product to be added in wishlist "+w.getProducts());
+				logger.info("Email for which product is added in wishlist "+w.getEmail());
+				 Wishlist addedwishlist=cartWishlistInterface.insert(w);
 				//Wishlist addedwishlist=cartWishlistInterface.insert(w);
 
 			}
+			logger.info("Final cartPrice during removeProductFromCart "+reducedPrice);
 			cart.setAmount(reducedPrice);
 			cart.setProduct(listProduct);
 		}
